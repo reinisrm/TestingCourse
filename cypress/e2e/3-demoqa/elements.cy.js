@@ -1,5 +1,5 @@
 import TextBoxPage from "../../pageObjects/textBoxPage.page";
-
+import CheckBoxPage from "../../pageObjects/checkbox.page";
 describe("Elements", () => {
 
     context("Text box scenarios", () => {
@@ -23,15 +23,47 @@ describe("Elements", () => {
             "Permananet Address :Random permanent address");
                  
         });   
-        it.only("Text box Negative", () => {
+        it("Text box Negative", () => {
             TextBoxPage.emailField.should("not.have.class", "field-error");
             TextBoxPage.emailField.type("random@email@asdsada.com");
             TextBoxPage.submitButton.click();
             TextBoxPage.emailField.should("have.class", "field-error");
 
         });
+    });
+    //Checkbox scenarios
+    context.only("Check Box scenarios", () => {
+        beforeEach(() => {     
+            CheckBoxPage.visit();
+        });
+
+        it('Checkbox select items', () => {
+            //Click Expand (+) Button
+            CheckBoxPage.expandButton.click();
+            //Click Notes, Angular, Private, Excel File.doc
+            CheckBoxPage.checkboxTitles.contains("Notes").click();
+            CheckBoxPage.checkboxTitles.contains("Angular").click();
+            CheckBoxPage.checkboxTitles.contains("Private").click();
+            CheckBoxPage.checkboxTitles.contains("Excel File.doc").click();
+            //Validate that selected items are registered
+            CheckBoxPage.result.should("have.text",
+             "You have selected :notesangularprivateexcelFile");
+        }); 
+        it('Checkbox click Desktop', () => {
+            //Click Expand (+) Button
+            CheckBoxPage.expandButton.click();
+            //Click Desktop
+            CheckBoxPage.checkboxTitles.contains("Desktop").click();
+            //Validate success message - you have selected :dekstopnotescommands
+            CheckBoxPage.result.should("have.text",
+             "You have selected :desktopnotescommands");
+        });
 
 
     });
+
+
+
+
 });
   
