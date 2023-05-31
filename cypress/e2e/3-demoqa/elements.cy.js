@@ -1,5 +1,6 @@
 import TextBoxPage from "../../pageObjects/textBoxPage.page";
 import CheckBoxPage from "../../pageObjects/checkbox.page";
+import radioButtonPage from "../../pageObjects/radioButton.page";
 describe("Elements", () => {
 
     context("Text box scenarios", () => {
@@ -32,7 +33,7 @@ describe("Elements", () => {
         });
     });
     //Checkbox scenarios
-    context.only("Check Box scenarios", () => {
+    context("Check Box scenarios", () => {
         beforeEach(() => {     
             CheckBoxPage.visit();
         });
@@ -58,10 +59,25 @@ describe("Elements", () => {
             CheckBoxPage.result.should("have.text",
              "You have selected :desktopnotescommands");
         });
-
-
     });
+    context.only("Check Box scenarios", () => {
+        beforeEach(() => {     
+            radioButtonPage.visit();
+        });
+        it("Click buttons nad validate", () => {
+            //Click yes button
+            radioButtonPage.yesButton.contains("Yes").click();
+            //Validate message - you have selected yes
+            radioButtonPage.successMessage.should("have.text", "Yes");
+            //Click impressive button
+            radioButtonPage.impressiveButton.click({force: true});
+            //Validate message - you have selected Impressive
+            radioButtonPage.successMessage.should("have.text", "Impressive");
+            //validate that no button is disabled
+            radioButtonPage.noButton.should("have.class", "disabled");
 
+        });
+    });
 
 
 
